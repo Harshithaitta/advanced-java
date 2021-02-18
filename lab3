@@ -93,3 +93,23 @@ numbers.stream()
 
 Arth.java
 
+import java.util.Random;
+interface Arithmetic {
+	int operation(int a, int b);
+}
+
+public class Arth {
+	public static void main(String[] args) {
+		int die1;   
+    int die2;   
+		die1=1+(int)(Math.random()*6) ; 
+		die2=1+(int)(Math.random()*6) ; 
+		Arithmetic addition = (int a, int b) -> (a + b);
+		System.out.println("the first die roll value"+die1);
+		System.out.println("the second die roll value"+die2);
+		System.out.println("sum of two dice roll is = " + addition.operation(die1, die2));
+
+		
+		
+	}
+}
