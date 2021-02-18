@@ -113,3 +113,51 @@ public class Arth {
 		
 	}
 }
+
+Main.java(square root)
+
+import java.util.*;
+interface SquareRoot
+{
+    double [] op(double[] a);
+}
+public class Main
+{
+    double[] sqrt(double[] a)
+        {
+            double x = a[0];
+            double y = 1;
+            double e = a[1];
+            double i=0;
+           
+            while (x - y > e)
+            {
+               x = (x + y) / 2;
+               y = a[0] / x;
+               i++;
+            }
+        double l[]=new double[2];
+            l[0]=x;
+            l[1]=i;
+            return l;
+        }
+
+public static void main(String[] args)
+{
+Scanner s= new Scanner(System.in);
+SquareRoot sq;
+System.out.println("Enter the number");
+double n=s.nextDouble();
+System.out.println("Enter the error of tolerence");
+double e=s.nextDouble();
+double a[]=new double[2];
+a[0]=n;
+a[1]=e;
+Main m=new Main();
+sq=(double[] z)->m.sqrt(z);//lambda expression
+System.out.println("Square Root: "+sq.op(a)[0]);
+System.out.println("No of iterations: "+sq.op(a)[1]);
+
+}
+
+}
