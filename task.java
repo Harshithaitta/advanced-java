@@ -61,7 +61,7 @@ public class task extends JFrame
 			try
 				{
 					Class.forName("oracle.jdbc.driver.OracleDriver");
-					Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","ammulu123");
+					Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","admin");
 					Statement stmt=con.createStatement();
 					stmt.executeUpdate("INSERT INTO empp1 values(n,a,o,s,an)");
 					stmt.close();
