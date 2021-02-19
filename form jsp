@@ -1,0 +1,50 @@
+datapost.jsp
+
+<%@ page language="java" contentType="text/html"%>
+<%@ page import="java.sql.*,java.util.*" %>
+<% 
+String i=request.getParameter("id");
+String n=request.getParameter("name");
+String a=request.getParameter("address");
+ 
+try(
+Class.forname("oracle.jdbc.driver.OracleDriver");
+Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","sweety99">
+
+int j=stmt.executeUpdate("insert into student(i,n,a)values(?,?,?);
+if(j>0)
+out.println("data is successfully inserted");
+else
+out.println("not inserted data");
+}
+catch(Exception e)
+{
+system.out.println(e);
+e.printStackTrace();
+}
+%>
+
+
+form.html
+
+<!DOCTYPE HTML>
+<html>
+<body>
+<form method="post" action="datapost.jsp">
+
+id:<br>
+<input type="text" name="id">
+<br>
+
+Name:<br>
+<input type="text" name="Name">
+<br>
+
+address:<br>
+<input type="text" name="address">
+<br>
+
+<input type="submit" value="submit">
+</form>
+</body>
+</html>
