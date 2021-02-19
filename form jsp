@@ -2,26 +2,26 @@ for form question- display a form with id, name, address using jsp
 
 datapost.jsp
 
-<%@ page language="java" contentType="text/html"%>
-<%@ page import="java.sql.*,java.util.*" %>
-<% 
-String i=request.getParameter("id");
-String n=request.getParameter("name");
-String a=request.getParameter("address");
- 
-try(
-Class.forname("oracle.jdbc.driver.OracleDriver");
-Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","sweety99">
-
-int j=stmt.executeUpdate("insert into student(i,n,a)values(?,?,?);
+<%@ page language="java" contentType="text/html" %>
+<%@page import ="java.sql., java.util."%>
+<%
+String i= request.getParameter("id");
+String n= request.getParameter("Name");
+String a= request.getParameter("address");
+try
+{
+Class.forName("oracle.jdbc.driver.OracleDriver");
+Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","SYSTEM","admin");
+Statement stmt=con.createStatement();
+int j=stmt.executeUpdate("INSERT INTO student(i,n,a) values(?,?,?)");
 if(j>0)
 out.println("data is successfully inserted");
 else
-out.println("not inserted data");
+out.println("not inserted data ");
 }
 catch(Exception e)
 {
-system.out.println(e);
+System.out.print(e);
 e.printStackTrace();
 }
 %>
