@@ -1,9 +1,9 @@
-CREATE TABLE  Login   
-   (name VARCHAR2(40),   
-    password VARCHAR2(40),   
-    email VARCHAR2(4000) 
-    
-   )  
+CREATE TABLE LOGIN
+(
+name VARCHAR2(40),
+email VARCHAR2(4000),
+password VARCHAR2(40)
+);  
 
 login.html
 
