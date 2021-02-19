@@ -1,0 +1,72 @@
+CREATE TABLE  Login   
+   (name VARCHAR2(40),   
+    password VARCHAR2(40),   
+    email VARCHAR2(4000) 
+    
+   )  
+   
+loginexample.java  
+  
+import java.io.*;  
+import java.sql.*;  
+import javax.servlet.ServletException;  
+import javax.servlet.http.*;  
+  
+public class loginexample extends HttpServlet 
+{  
+	public void doPost(HttpServletRequest request, HttpServletResponse response)  
+            throws ServletException, IOException 
+	{  
+  
+		response.setContentType("text/html");  
+		PrintWriter out = response.getWriter();  
+          
+		String na=request.getParameter("Name");  
+		String pass=request.getParameter("Password");  
+		String em=request.getParameter("Email");  
+ 
+         	try
+		{  
+			Class.forName("oracle.jdbc.driver.OracleDriver");  
+			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","system","admin");
+  			PreparedStatement ps=con.prepareStatement("insert into login values(?,?,?)");  
+  			ps.setString(1,na);  
+			ps.setString(2,pass);  
+			ps.setString(3,em);  
+			 
+          
+			int i=ps.executeUpdate();  
+			if(i>0)  
+				out.print("You are successfully registered...");  
+      
+          
+		}
+			catch (Exception e) 
+			{
+				System.out.println(e);
+			}  
+          
+			out.close();  
+		}  
+  
+}
+
+
+web.xml   
+
+<web-app>   
+<servlet>  
+<servlet-name>Login page</servlet-name>  
+<servlet-class>login</servlet-class>  
+</servlet>  
+  
+<servlet-mapping>  
+<servlet-name>Login page</servlet-name>  
+<url-pattern>/servlet/login</url-pattern>  
+</servlet-mapping>  
+  
+<welcome-file-list>  
+    <welcome-file>login.html</welcome-file>  
+</welcome-file-list>  
+  
+</web-app>
