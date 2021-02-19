@@ -17,17 +17,15 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-//Extend HttpServlet Class
-
 public class HelloWorld extends HttpServlet
-{javac
+{
 public void doGet(HttpServletRequest request, HttpServletResponse res) throws ServletException, IOException
 {
 res.setContentType("text/html");
-PrintWriter out = res.getWriter(); 
+PrintWriter out = res.getWriter();
 out.println("<html><body>");
-out.println("hello");
+out.println("kanishka is  beautiful gal");
 out.println("</body></html>");
 out.close();
 }
-}  
+}
