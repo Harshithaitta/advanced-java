@@ -1,0 +1,35 @@
+palind.java
+
+import java.rmi.*;
+public interface palind extends Remote
+{
+public boolean ispalind (String s) throws RemoteException;
+}
+
+palindR.java
+
+import java.rmi.*;
+import java.rmi.server.UnicastRemoteObject;
+import java.lang.*;
+public class palindR extends UnicastRemoteObject implements palind
+{
+palindR() throws RemoteException
+{
+super();
+}
+
+public boolean ispalind(String s ) throws RemoteException
+{
+ int i=0,j=s.length()-1;
+ while(i<j)
+ {
+  if(s.charAt(i)!=s.charAt(j))
+  return false;
+  i++;
+  j--;
+}
+ return true;
+}
+}
+
+
