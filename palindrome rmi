@@ -33,3 +33,54 @@ public boolean ispalind(String s ) throws RemoteException
 }
 
 
+Myser.java
+
+import java.rmi.*;
+import java.rmi.registry.*;
+public class Myser
+{
+  public static void main(String args[])
+  {
+  try
+  {
+   palind skeleton=new palindR();
+   Naming.rebind("rmi://localhost:1099/example",skeleton);
+   System.out.println("Server is ready....");
+   System.out.println("Remote Object is ready....");
+   }
+  catch(Exception e)
+  {
+   System.out.println(e);
+   }
+  }
+}
+
+
+Myclient.java
+
+import java.rmi.*;
+import java.io.*;
+
+
+public class Myclient
+{
+public static void main(String args[])
+{
+try
+{
+palind stub =(palind)Naming.lookup("rmi://localhost:1099/example");
+BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+System.out.println("enter string length:");
+String s=br.readLine();
+if (stub.ispalind(s))
+System.out.println("given string is palindrom");
+else
+System.out.println("not");
+}
+catch(Exception e)
+{
+System.out.println(e);
+}
+}
+}
+
