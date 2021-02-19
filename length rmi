@@ -44,17 +44,17 @@ System.out.println(e);
 
 MyServer.java:
 import java.rmi.*;
-import java.io.*;
-public class MyClient{
+import java.rmi.registry.*;
+public class MyServer
+{
 public static void main(String args[])
 {
 try
 {
-length1 stub=(length1)Naming.lookup("rmi://localhost:1099/strex");
-BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
-System.out.println("Enter String to find length:");
-String s=br.readLine();
-System.out.println("length of string is"+stub.slength(s));
+length1 skeleton=new lengthRemote();
+Naming.rebind("rmi://localhost:9999/examp",skeleton);
+System.out.println("Server is Ready........");
+System.out.println("Remote Object is Ready........");
 }
 catch(Exception e)
 {
