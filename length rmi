@@ -1,0 +1,64 @@
+length1:
+import java.rmi.*;
+public interface length1 extends Remote
+{
+public int slength(String s) throws RemoteException;
+}
+
+lengthremote:
+import java.rmi.*;
+import java.rmi.server.UnicastRemoteObject;
+import java.lang.*;
+public class lengthRemote extends UnicastRemoteObject implements length1
+{
+lengthRemote() throws RemoteException
+{
+super();
+}
+public int slength(String s) throws RemoteException
+{
+return s.length();
+}
+}
+
+MyClient.java:
+import java.rmi.*;
+import java.io.*;
+public class MyClient{
+public static void main(String args[])
+{
+try
+{
+length1 stub=(length1)Naming.lookup("rmi://localhost:1099/strex");
+BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+System.out.println("Enter String to find length:");
+String s=br.readLine();
+System.out.println("length of string is"+stub.slength(s));
+}
+catch(Exception e)
+{
+System.out.println(e);
+}
+}
+}
+
+MyServer.java:
+import java.rmi.*;
+import java.io.*;
+public class MyClient{
+public static void main(String args[])
+{
+try
+{
+length1 stub=(length1)Naming.lookup("rmi://localhost:1099/strex");
+BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+System.out.println("Enter String to find length:");
+String s=br.readLine();
+System.out.println("length of string is"+stub.slength(s));
+}
+catch(Exception e)
+{
+System.out.println(e);
+}
+}
+}
