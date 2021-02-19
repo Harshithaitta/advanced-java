@@ -84,3 +84,12 @@ System.out.println(e);
 }
 }
 
+
+javac palind.java
+javac palindR.java
+javac Myser.java
+javac Mycleent.java
+start Rmiregistry
+(another cmd 
+java Myser)
+java Mycleent
