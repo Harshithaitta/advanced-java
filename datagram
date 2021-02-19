@@ -1,0 +1,35 @@
+import java.util.*;
+import java.io.*;
+import java.net.*;
+public class server1{
+public static void main(String args[]) throws Exception
+{
+DatagramSocket ds=new DatagramSocket();
+System.out.println("Enter data to send to client");
+Scanner sc=new Scanner(System.in);
+String rs=sc.nextLine();
+//byte buf[]=new byte[1024];
+//buf=rs.getBytes();
+DatagramPacket dp=new DatagramPacket(rs.getBytes(),rs.length(),InetAddress.getLocalHost(),3000);
+ds.send(dp);
+}
+}
+
+
+
+
+import java.util.*;
+import java.io.*;
+import java.net.*;
+public class oclient{
+public static void main(String args[]) throws Exception
+{
+DatagramSocket ds=new DatagramSocket(3000);
+InetAddress ip=InetAddress.getLocalHost();
+byte res[]=new byte[1024];
+DatagramPacket dpr=new DatagramPacket(res,1024);
+ds.receive(dpr);
+String rs=new String(res,0,res.length);
+System.out.println("Server data is:"+ rs);
+}
+}
