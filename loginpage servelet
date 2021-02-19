@@ -4,7 +4,24 @@ CREATE TABLE  Login
     email VARCHAR2(4000) 
     
    )  
-   
+
+login.html
+
+<html>  
+<body>  
+<form action="Login page" method="post">  
+  
+Name:<input type="text" name="Name"/><br/><br/>  
+Password:<input type="password" name="Password"/><br/><br/>  
+Email Id:<input type="text" name="Email"/><br/><br/>  
+
+<input type="submit" value="Login"/>  
+  
+</form>  
+</body>  
+</html>  
+
+
 loginexample.java  
   
 import java.io.*;  
