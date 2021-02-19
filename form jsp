@@ -1,3 +1,5 @@
+for form question- display a form with id, name, address using jsp
+
 datapost.jsp
 
 <%@ page language="java" contentType="text/html"%>
