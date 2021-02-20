@@ -1,0 +1,73 @@
+import java.io.*;
+import java.net.*;
+import java.util.*;
+public class SortClient {
+
+            public static void main(String[] args) throws Exception
+            {
+                                     Socket s=new Socket("127.0.0.1",7777);
+					Scanner sc=new Scanner(System.in);
+                                    if(s.isConnected())
+                                    {
+                                                System.out.println("Connected to server");
+                                    }
+                                    
+                                    int a[]=new int[10];
+                                    System.out.println("Enter 10 numbers:");
+                                    DataOutputStream dout=new DataOutputStream(s.getOutputStream());
+                                    dout.writeInt(10);
+                                    for(int i=0;i<10;i++)
+                                    {
+                                                int r=sc.nextInt();
+                                                dout.writeInt(r);
+                                    }
+                                    System.out.println("Data Sent");
+                                    DataInputStream din=new DataInputStream(s.getInputStream());
+                                    int r;
+                                    System.out.println("Receiving Asending order Data....");
+                                    for(int i=0;i<10;i++)
+                                    {
+                                                r=din.readInt();
+                                                System.out.print(r+" ");
+                                    }
+                                    s.close();
+            }
+}
+
+
+import java.io.*;
+import java.net.*;
+import java.util.*;
+class SortServer
+{
+            public static void main(String args[]) throws Exception
+            {
+                        ServerSocket ss=new ServerSocket(9999);
+                        Socket s=ss.accept();
+                        System.out.println("connected..........");
+                        DataInputStream din=new DataInputStream(s.getInputStream());
+                        DataOutputStream dout=new DataOutputStream(s.getOutputStream());
+                        int r,i=0;
+                        int n=din.readInt();
+                        int a[]=new int[n];
+                        System.out.println("data:");
+                        int count=0;
+                        System.out.println("Receiving Data....");
+                        for(i=0;i<n;i++)
+                        {
+                                    a[i]=din.readInt();
+                        }
+                        System.out.println("Data Received");
+                        System.out.println("Sorting Data........");
+                        Arrays.sort(a);
+                        System.out.println("Data Sorted");
+                        System.out.println("Sending Data........");
+                        for(i=0;i<n;i++)
+                        {
+                                    dout.writeInt(a[i]);
+                        }
+                        System.out.println("\nData Sent Successfully");
+                        s.close();
+                        ss.close();
+            }
+}
