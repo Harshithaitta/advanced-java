@@ -1,0 +1,63 @@
+Adder.java:
+import java.rmi.*;
+public interface Adder extends Remote
+{
+public int add(int x,int y) throws RemoteException;
+}
+
+AdderRemote.java:
+import java.rmi.*;
+import java.rmi.server.UnicastRemoteObject;//optional
+public class AdderRemote extends UnicastRemoteObject implements Adder
+{
+AdderRemote() throws RemoteException
+{
+super();//reference for unicastRemoteObject
+}
+public int add(int x,int y) throws RemoteException
+{
+return x+y;
+}
+}
+
+MyClient.java:
+import java.rmi.*;
+import java.io.*;
+public class MyClient{
+public static void main(String args[]){
+try{
+int Number1=0;
+int Number2=0;
+Adder stub=(Adder)Naming.lookup("rmi://localhost:1099/example");
+DataInputStream in=new DataInputStream(System.in);
+System.out.print("Enter Number 1:");
+Number1=Integer.parseInt(in.readLine());
+System.out.print("Enter Number 2:");
+Number2=Integer.parseInt(in.readLine());
+System.out.println(stub.add(Number1,Number2));
+}
+catch(Exception e)
+{
+System.out.println(e);
+}
+}
+}
+
+MyServer.java:
+import java.rmi.*;
+import java.rmi.registry.*;
+public class MyServer
+{
+public static void main(String args[]){
+try{
+Adder skeleton=new AdderRemote();
+Naming.rebind("rmi://localhost:1099/example",skeleton);
+System.out.println("Server is Ready.....");
+System.out.println("Remote Object is Ready.....");
+}
+catch(Exception e)
+{
+System.out.print(e);
+}
+}
+}
