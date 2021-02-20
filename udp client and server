@@ -1,0 +1,60 @@
+import java.util.*;
+import java.io.*;
+import java.net.*;
+class Server
+{
+	public static void main(String args[]) throws Exception
+	{
+		DatagramSocket ds=new DatagramSocket();
+		while(true)
+		{
+			byte res[]=new byte[1024];
+			DatagramPacket dpr=new DatagramPacket(res,res.length);
+			ds.receive(dpr);
+			String s=new String(res,0,res.length);
+			s=s.trim();		
+			if(s.equals("Stop"))
+				break;
+			else
+			System.out.println(s);
+			System.out.println("enter data to send to client");
+			Scanner sc=new Scanner(System.in);
+			String rs=sc.nextLine();
+			byte buf[]=new byte[1024];
+			buf=rs.getBytes();
+			int port=dpr.getPort();
+			DatagramPacket dp=new DatagramPacket(buf,buf.length,InetAddress.getLocalHost(),port);
+			ds.send(dp);
+		}
+	}
+}
+
+
+import java.util.*;
+import java.io.*;
+import java.net.*;
+class Client
+{
+	public static void main(String[] args) throws Exception
+	{
+		Scanner sc=new Scanner(System.in);
+		DatagramSocket ds=new DatagramSocket();
+		InetAddress ip=InetAddress.getLocalHost();
+		while(true)
+		{
+			byte buf[]=new byte[1024];
+			System.out.println("Enter data to send");
+			String s=sc.nextLine();
+			if(s.equals("Stop"))
+				break;
+			buf=s.getBytes();
+			DatagramPacket dp=new DatagramPacket(buf,buf.length,ip,8989);
+			ds.send(dp);
+			byte res[]=new byte[1024];
+			DatagramPacket dpr=new DatagramPacket(res,res.length);
+			ds.receive(dpr);
+			String rs=new String(res,0,res.length);
+			System.out.println("Server data is"+rs);
+		}
+	}
+}
