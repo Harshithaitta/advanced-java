@@ -1,3 +1,14 @@
+CREATE table empp1
+( 
+Name VARCHAR(10),
+age NUMBER(10),
+Occupation VARCHAR(20),
+Salary NUMBER(5),
+anything VARCHAR(50)
+); 
+
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
