@@ -1,60 +1,115 @@
-import java.util.*;
 import java.io.*;
 import java.net.*;
-class Server
+
+public class udp_client
 {
-	public static void main(String args[]) throws Exception
+	public static void main(String args[])
 	{
-		DatagramSocket ds=new DatagramSocket();
-		while(true)
+		DatagramSocket sock = null;
+		int port = 7777;
+		String s;
+		
+		BufferedReader cin = new BufferedReader(new InputStreamReader(System.in));
+		
+		try
 		{
-			byte res[]=new byte[1024];
-			DatagramPacket dpr=new DatagramPacket(res,res.length);
-			ds.receive(dpr);
-			String s=new String(res,0,res.length);
-			s=s.trim();		
-			if(s.equals("Stop"))
-				break;
-			else
-			System.out.println(s);
-			System.out.println("enter data to send to client");
-			Scanner sc=new Scanner(System.in);
-			String rs=sc.nextLine();
-			byte buf[]=new byte[1024];
-			buf=rs.getBytes();
-			int port=dpr.getPort();
-			DatagramPacket dp=new DatagramPacket(buf,buf.length,InetAddress.getLocalHost(),port);
-			ds.send(dp);
+			sock = new DatagramSocket();
+			
+			InetAddress host = InetAddress.getByName("localhost");
+			
+			while(true)
+			{
+				//take input and send the packet
+				echo("Enter message to send : ");
+				s = (String)cin.readLine();
+				byte[] b = s.getBytes();
+				
+				DatagramPacket  dp = new DatagramPacket(b , b.length , host , port);
+				sock.send(dp);
+				
+				//now receive reply
+				//buffer to receive incoming data
+				byte[] buffer = new byte[65536];
+				DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
+				sock.receive(reply);
+				
+				byte[] data = reply.getData();
+				s = new String(data, 0, reply.getLength());
+				
+				//echo the details of incoming data - client ip : client port - client message
+				echo(reply.getAddress().getHostAddress() + " : " + reply.getPort() + " - " + s);
+			}
 		}
+		
+		catch(IOException e)
+		{
+			System.err.println("IOException " + e);
+		}
+	}
+	
+	//simple function to echo data to terminal
+	public static void echo(String msg)
+	{
+		System.out.println(msg);
 	}
 }
 
 
-import java.util.*;
+
+
+/**
+	Java ECHO server with UDP sockets example
+*/
+
 import java.io.*;
 import java.net.*;
-class Client
+
+public class udp_server
 {
-	public static void main(String[] args) throws Exception
+	public static void main(String args[])
 	{
-		Scanner sc=new Scanner(System.in);
-		DatagramSocket ds=new DatagramSocket();
-		InetAddress ip=InetAddress.getLocalHost();
-		while(true)
+		DatagramSocket sock = null;
+		
+		try
 		{
-			byte buf[]=new byte[1024];
-			System.out.println("Enter data to send");
-			String s=sc.nextLine();
-			if(s.equals("Stop"))
-				break;
-			buf=s.getBytes();
-			DatagramPacket dp=new DatagramPacket(buf,buf.length,ip,8989);
-			ds.send(dp);
-			byte res[]=new byte[1024];
-			DatagramPacket dpr=new DatagramPacket(res,res.length);
-			ds.receive(dpr);
-			String rs=new String(res,0,res.length);
-			System.out.println("Server data is"+rs);
+			//1. creating a server socket, parameter is local port number
+			sock = new DatagramSocket(7777);
+			
+			//buffer to receive incoming data
+			byte[] buffer = new byte[65536];
+			DatagramPacket incoming = new DatagramPacket(buffer, buffer.length);
+			
+			//2. Wait for an incoming data
+			echo("Server socket created. Waiting for incoming data...");
+			
+			//communication loop
+			while(true)
+			{
+				sock.receive(incoming);
+				byte[] data = incoming.getData();
+				String s = new String(data, 0, incoming.getLength());
+				
+				//echo the details of incoming data - client ip : client port - client message
+				echo(incoming.getAddress().getHostAddress() + " : " + incoming.getPort() + " - " + s);
+				
+				s = "OK : " + s;
+				DatagramPacket dp = new DatagramPacket(s.getBytes() , s.getBytes().length , incoming.getAddress() , incoming.getPort());
+				sock.send(dp);
+			}
+		}
+		
+		catch(IOException e)
+		{
+			System.err.println("IOException " + e);
 		}
 	}
-}
+	
+	//simple function to echo data to terminal
+	public static void echo(String msg)
+	{
+		System.out.println(msg);
+	}
+} 
+
+
+
